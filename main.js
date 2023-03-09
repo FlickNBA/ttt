@@ -1,5 +1,3 @@
-const boardDiv = document.querySelector("#board");
-
 let player1, player2;
 
 const player = (char) => {
@@ -7,6 +5,8 @@ const player = (char) => {
 }
 
 const gameBoard = (function () {
+    const boardDiv = document.querySelector("#board");
+    const lineDiv = document.querySelector("#line");
     let turnOf;
     let counter = 1;
     let freeTiles;
@@ -27,6 +27,10 @@ const gameBoard = (function () {
             boardDiv.style["width"] = `${windowWidth * 0.6667}px`;
             boardDiv.style["height"] = `${windowWidth * 0.6667}px`;
         }
+        lineDiv.style["offsetTop"] = boardDiv.offsetTop;
+        lineDiv.style["width"] = boardDiv.style["width"];
+        //lineDiv.style["height"] = boardDiv.style["height"];
+        lineDiv.style["margin-top"] = "48px";
     }
 
     const fillWithTiles = () => {
@@ -156,6 +160,7 @@ const gameBoard = (function () {
         for (let combo of combinations) {
             let firstLetter = combo[0];
             if (combo == `${firstLetter}${firstLetter}${firstLetter}`) {
+                console.log(combo);
                 endGame(firstLetter);
             }
         }

@@ -20,6 +20,7 @@ body {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     gap: 1rem;
+    z-index: 2;
 }
 
 .tile {
@@ -48,3 +49,24 @@ h1 {
     cursor: pointer;
     text-decoration: underline overline white;
 }
+
+#line {
+    background-color: rgba(255, 0, 0, 0.25);
+    position: absolute;
+    z-index: 1;
+    height: 1rem;
+
+}
+
+/* 
+
+[1, 2, 3], no changes + margin-bottom (2/3 width - 48)
+[4, 5, 6], no changes
+[7, 8, 9], no changes + margin-top (2/3 width + 48)
+[1, 4, 7], rotate(90deg) + margin-right (2/3 width)
+[2, 5, 8], rotate(90deg)
+[3, 6, 9], rotate(90deg) + margin-left (2/3 width)
+[1, 5, 9], rotate(45deg)
+[3, 5, 7] rotate(135deg)
+
+*/
