@@ -11,10 +11,63 @@ const gameBoard = (function () {
     let counter = 1;
     let freeTiles;
     let gameOver = false;
+    let boardWidth;
 
-    const endGame = (result) => {
-        gameOver = true;
-        console.log(result);
+    const endGame = (result, combo) => {
+        if (!gameOver) {
+            gameOver = true;
+            console.log(result);
+            if (combo) drawLine(combo);
+        }
+    }
+
+    const drawLine = (combo) => {
+        console.log(combo);
+        switch (combo) {
+            case "123":
+                lineDiv.style["margin-bottom"] = `${(boardWidth * 0.6667) - 48}px`;
+                break;
+            case "789":
+                lineDiv.style["margin-top"] = `${(boardWidth * 0.6667) + 48}px`;
+                break;
+            case "147":
+                lineDiv.style["transform"] = "rotate(90deg)";
+                lineDiv.style["margin-right"] = `${boardWidth * 0.6667 + 12}px`;
+                lineDiv.style["margin-top"] = "48px";
+                break;
+            case "258":
+                lineDiv.style["transform"] = "rotate(90deg)";
+                lineDiv.style["margin-top"] = "48px";
+                break;
+            case "369":
+                lineDiv.style["transform"] = "rotate(90deg)";
+                lineDiv.style["margin-left"] = `${(boardWidth * 0.6667) + 12}px`;
+                lineDiv.style["margin-top"] = "48px";
+                break;
+            case "159":
+                lineDiv.style["transform"] = "rotate(45deg)";
+                lineDiv.style["margin-top"] = "48px";
+                lineDiv.style["width"] = `${(boardWidth * Math.sqrt(2)) - 8}px`;
+                break;
+            case "357":
+                lineDiv.style["transform"] = "rotate(135deg)";
+                lineDiv.style["margin-top"] = "48px";
+                lineDiv.style["width"] = `${(boardWidth * Math.sqrt(2)) - 8}px`;
+                break;
+        }
+
+        setTimeout(() => {
+            lineDiv.style["transition"] = "all 1s";
+            lineDiv.classList.remove("opacity-0");
+        }, 1);
+            // [1, 2, 3], no changes + margin-bottom (2/3 width - 48)
+            // [4, 5, 6], no changes
+            // [7, 8, 9], no changes + margin-top (2/3 width + 48)
+            // [1, 4, 7], rotate(90deg) + margin-right (2/3 width)
+            // [2, 5, 8], rotate(90deg)
+            // [3, 6, 9], rotate(90deg) + margin-left (2/3 width)
+            // [1, 5, 9], rotate(45deg)
+            // [3, 5, 7] rotate(135deg)
     }
 
     const prepareBoard = () => {
@@ -27,10 +80,11 @@ const gameBoard = (function () {
             boardDiv.style["width"] = `${windowWidth * 0.6667}px`;
             boardDiv.style["height"] = `${windowWidth * 0.6667}px`;
         }
+        boardWidth = boardDiv.style["width"].slice(0, -2);
         lineDiv.style["offsetTop"] = boardDiv.offsetTop;
         lineDiv.style["width"] = boardDiv.style["width"];
         //lineDiv.style["height"] = boardDiv.style["height"];
-        lineDiv.style["margin-top"] = "48px";
+        //lineDiv.style["margin-top"] = "48px";
     }
 
     const fillWithTiles = () => {
@@ -153,15 +207,16 @@ const gameBoard = (function () {
                 //value = tile value
                 //console.log(`Tile ID: ${tile}, value: ${value}`);
             }
-            combinations.push(combined);
+            combinations.push({combined, winningCombination});
             // console.log(`${winningCombination.join("")} ${combined}`);
         }
         //console.log(combinations);
         for (let combo of combinations) {
-            let firstLetter = combo[0];
-            if (combo == `${firstLetter}${firstLetter}${firstLetter}`) {
-                console.log(combo);
-                endGame(firstLetter);
+            //console.log(combo);
+            let firstLetter = combo["combined"][0];
+            if (combo["combined"] == `${firstLetter}${firstLetter}${firstLetter}`) {
+                //console.log(`${combo["combined"]} ${combo["winningCombination"]}`);
+                endGame(firstLetter, combo["winningCombination"].join(""));
             }
         }
         
