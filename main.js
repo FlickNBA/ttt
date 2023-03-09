@@ -22,8 +22,18 @@ const gameBoard = (function () {
         }
     }
 
-    return {prepareBoard, fillWithTiles}
+    const bindTiles = () => {
+        let boardTiles = document.querySelectorAll(".tile");
+        boardTiles.forEach((tile) => {
+            tile.addEventListener("click", (tile) => {
+                console.log(tile.target.attributes["data-tile"].value);
+            })
+        })
+    }
+
+    return {prepareBoard, fillWithTiles, bindTiles}
 })();
 
 gameBoard.prepareBoard();
 gameBoard.fillWithTiles();
+gameBoard.bindTiles();

@@ -9,23 +9,13 @@ body {
 }
 
 #board {
-    /* background-color: rgba(255, 255, 255, 0.5); */
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
+    gap: 1rem;
 }
 
 .tile {
     background-color: rgba(255, 255, 255, 0.25);
-    border: 1rem solid rgba(0, 0, 0, 0.5);
-    border-bottom: 0;
-    border-left: 0;
-}
-
-.tile:nth-child(1), .tile:nth-child(2), .tile:nth-child(3) {
-    border-top: 0;
-}
-
-.tile:nth-child(3), .tile:nth-child(6), .tile:nth-child(9) {
-    border-right: 0;
+    cursor: pointer;
 }
