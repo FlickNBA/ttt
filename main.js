@@ -7,6 +7,7 @@ const player = (char) => {
 const gameBoard = (function () {
     const boardDiv = document.querySelector("#board");
     const lineDiv = document.querySelector("#line");
+    let roundH1 = document.querySelector("#round");
     let turnOf;
     let counter = 1;
     let freeTiles;
@@ -17,6 +18,8 @@ const gameBoard = (function () {
         if (!gameOver) {
             gameOver = true;
             console.log(result);
+            let winner = player1.char == result ? "Player 1" : "Player 2";
+            roundH1.innerHTML = `<span class="white">${winner} (${result}) won in ${counter - 2} rounds!</span>`;
             if (combo) drawLine(combo);
         }
     }
@@ -151,7 +154,6 @@ const gameBoard = (function () {
     }
 
     const countRounds = () => {
-        let roundH1 = document.querySelector("#round");
         if (counter % 2 == 1) {
             roundH1.innerHTML = `Round: <span class="white">${counter}</span>, waiting for <span class="white">Player 1 (${player1.char})</span> move...`;
             whoPlaysNow(player1);
